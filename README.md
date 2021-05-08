@@ -29,4 +29,6 @@ Download the .zip folder from releases, extract it to a folder `e.g: MyProjectFo
 Next, open the .sln file and once loaded go to the `Source.cpp` file, then find the webhook link
 inside of the sprintf call and change it to desired link.
 
+**Make sure you are using "Release" not "Debug" when compiling!
+
 Press ctrl + b and enjoy!
