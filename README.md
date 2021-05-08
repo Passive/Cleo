@@ -7,7 +7,7 @@
 </p>
 
 A C++ token grabber that anyone can use, credit to [NightFallGT](https://github.com/NightfallGT/Discord-Token-Grabber/blob/master/Token-Disc/Token-Disc.cpp)
-and his token grabber, I used his "findMatch" function in order to fix a couple issues I was having.
+and his token grabber, I used it and created a more understandable and simple version of his.
 
 ## Pros
      - Silence and persistence
