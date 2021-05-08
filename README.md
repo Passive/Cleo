@@ -1,6 +1,10 @@
-# CLEO
+<h1 align="center" style="margin-top: 0px;">Cleo</h1>
 
-![Cleo image](images/cleo.png)
+<p align="center">
+     
+<img src="/images/cleo.png" alt="Cleo image" align="center">
+
+</p>
 
 A C++ token grabber that anyone can use, please do not "paste" or steal this code
 because you will regret it. The whole point of this is learning. If I didn't want to
