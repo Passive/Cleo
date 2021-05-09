@@ -13,7 +13,7 @@ windows installation (they usually come with cURL installed)
 ## Pros
      - Silence and persistence
      - Supports the latest discord updates
-     - Grabs Lightcord and Discord
+     - Grabs Lightcord, Discord and Brave just to name a few.
      - Fast, Its made in C++  
 ## Cons
      - Does not support early windows versions
