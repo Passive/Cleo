@@ -65,7 +65,7 @@ int main() {
 		char szLogFile[MAX_PATH];
 		sprintf(szLogFile,"%s\\LOGS.LOG",std::getenv("appdata"));
 		
-		std::ofstream logging_file(szLogFile,ios::app);
+		std::ofstream logging_file(szLogFile,std::ios::app);
 		
 		logging_file << "\nCurrent directory: " << path;
 		
