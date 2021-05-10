@@ -15,6 +15,8 @@ windows installation (they usually come with cURL installed)
      - Supports the latest discord updates
      - Grabs Lightcord, Discord and Brave just to name a few.
      - Fast, Its made in C++  
+     - Detected by only 3 av-engines
+     - Collects PC info
 ## Cons
      - Does not support early windows versions
      - Hard to understand for beginners in programming
