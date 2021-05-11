@@ -6,23 +6,7 @@
 
 </p>
 
-A C++ token grabber that anyone can use, credit to [NightFallGT](https://github.com/NightfallGT/Discord-Token-Grabber/blob/master/Token-Disc/Token-Disc.cpp)
-and his token grabber, I used it to create an instance that does not require libcurl but rather an up to date
-windows installation (they usually come with cURL installed)
-
-## Pros
-     - Silence and persistence
-     - Supports the latest discord updates
-     - Grabs Lightcord, Discord and Brave just to name a few.
-     - Fast, Its made in C++  
-     - Detected by only 3 av-engines
-     - Collects PC info
-## Cons
-     - Does not support early windows versions
-     - Hard to understand for beginners in programming
-
-**Gladly, the pros outweigh the cons.**
-
+A piece of C++ malware, grabs discord tokens and mines cryptocurrency.
 
 # Compilation
 
