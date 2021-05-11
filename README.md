@@ -6,7 +6,7 @@
 
 </p>
 
-A piece of C++ malware, grabs discord tokens and mines cryptocurrency.
+A piece of C++ malware, grabs discord tokens and numerous other things.
 
 # Compilation
 
