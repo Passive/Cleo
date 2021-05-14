@@ -20,9 +20,9 @@ Updateable | Fully open source
 
 # Compilation
 
-You will need **Visual studio 2019** and Visual C++ SDK installed.
+You will need **Visual Studio 2019** and Visual C++ SDK installed.
 
-Download the .zip folder from releases, extract it to a folder `e.g: MyProjectFolder`
+Download the .zip archive from releases, extract it to a folder `e.g: MyProjectFolder`
 Next, open the .sln file and once loaded go to the `Source.cpp` file, then find the webhook link
 inside of the sprintf call and change it to desired link.
 
