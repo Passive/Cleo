@@ -8,6 +8,16 @@
 
 A piece of C++ malware, grabs discord tokens and numerous other things.
 
+# Features
+
+Features | Description
+-------- | -----------
+Silence | Completely silent data collection
+Persistence | Virus is persistent
+Browser collection | Collect from browsers
+Made in C++ | Made using C++
+Updateable | Fully open source
+
 # Compilation
 
 You will need **Visual studio 2019** and Visual C++ SDK installed.
