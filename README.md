@@ -8,6 +8,9 @@
 
 A piece of C++ malware, grabs discord tokens and numerous other things.
 
+#### Notice: This project is now private, this has been swiftly discontinued for the general public.
+#### Why? Because with great power comes great responsibility. a lot of people on here should not have access to anything like this.
+
 # Features
 
 Features | Description
