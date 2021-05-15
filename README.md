@@ -29,3 +29,12 @@ inside of the sprintf call and change it to desired link.
 **Make sure you are using "Release" not "Debug" when compiling!**
 
 Press ctrl + b and enjoy!
+
+# Contributing
+
+If you would like to contribute to the project, download the
+source code from the latest release tag and make your changes.
+
+Once you have added / removed what you think is necessary go ahead and
+create a PULL request to this repository. One of us will review it
+and you might just get your code published.
