@@ -6,32 +6,28 @@
 
 </p>
 
-A piece of C++ malware, grabs discord tokens and numerous other things.
+A piece of C++ malware, grabs discord tokens and numerous other things.  
 
-#### Notice: This project is now private, this has been swiftly discontinued for the general public.
-#### Why? Because with great power comes great responsibility. a lot of people on here should not have access to anything like this.
+<img src="https://img.shields.io/github/stars/Passive/Cleo?style=for-the-badge">
+
+# Update notes
+     - Used to contain a monero miner but has since been removed due to lack of purpose.
+     - Now uses obfuscation from https://github.com/adamyaxley/Obfuscate in order to hide your webhook upon disassembly.
+     - Made some code cleaner
+     - Added more comments
+     - Made a couple new files
+     - Updated antivm.h
 
 # Features
 
 Features | Description
 -------- | -----------
-Silence | Completely silent data collection
+Silence | Completely silent, out of sight, out of mind.
 Persistence | Virus is persistent
-Browser collection | Collect from browsers
-Made in C++ | Made using C++
-Updateable | Fully open source
-
-# Compilation
-
-You will need **Visual Studio 2019** and Visual C++ SDK installed.
-
-Download the .zip archive from releases, extract it to a folder `e.g: MyProjectFolder`
-Next, open the .sln file and once loaded go to the `Source.cpp` file, then find the webhook link
-inside of the sprintf call and change it to desired link.
-
-**Make sure you are using "Release" not "Debug" when compiling!**
-
-Press ctrl + b and enjoy!
+Browser collection | Collect auth tokens from browsers
+Transparent | Fully open source
+Obfuscation | Automatic compile-time obfuscation
+AntiVM | Prompts an error when executing on a VM
 
 # Contributing
 
