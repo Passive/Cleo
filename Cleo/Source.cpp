@@ -1,5 +1,4 @@
 #define _CRT_SECURE_NO_WARNINGS
-
 #define WEBHOOK AY_OBFUSCATE("http")
 
 #include "includes.h"
