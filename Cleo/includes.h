@@ -1,0 +1,13 @@
+#include <iostream>
+#include <regex>
+#include <fstream>
+#include <string>
+#include <filesystem>
+#include <Windows.h>
+#include <sys/stat.h>
+#include <thread>
+#include <wininet.h>
+#include "antivm.h"
+#include <intrin.h>
+#include "modules.h"
+#include "confuser.h"
