@@ -1,14 +1,9 @@
 <h1 align="center" style="margin-top: 0px;">Cleo</h1>
 
-<p align="center">
-     
-<img src="/images/cleo.png" alt="Cleo image" align="center">
-
-</p>
+<img src="https://img.shields.io/github/stars/Passive/Cleo?style=plastic"> <img src="https://img.shields.io/bitbucket/issues/Passive/Cleo?style=plastic"> 
 
 A piece of C++ malware, grabs discord tokens and numerous other things.  
 
-<img src="https://img.shields.io/github/stars/Passive/Cleo?style=for-the-badge">
 
 # Update notes
      - Used to contain a monero miner but has since been removed due to lack of purpose.
