@@ -1,4 +1,4 @@
-<h1 align="center" style="margin-top: 0px;">Cleo</h1>
+<h1>Cleo</h1>
 
 <img src="https://img.shields.io/github/stars/Passive/Cleo?style=plastic"> <img src="https://img.shields.io/github/forks/Passive/Cleo?style=plastic"> 
 
@@ -6,12 +6,12 @@ A piece of C++ malware, grabs discord tokens and numerous other things.
 
 
 # Update notes
-     - Used to contain a monero miner but has since been removed due to lack of purpose.
-     - Now uses obfuscation from https://github.com/adamyaxley/Obfuscate in order to hide your webhook upon disassembly.
-     - Made some code cleaner
-     - Added more comments
-     - Made a couple new files
-     - Updated antivm.h
+     - Fixed not scanning applications that did not include LightCord
+     - Cleaned up code alot
+     - Moved some things to modules.h
+     - Update persistence methods
+     - Requires admin permissions
+     - Added some other spooky things (check the code...)
 
 # Features
 
