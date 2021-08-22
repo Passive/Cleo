@@ -1,6 +1,6 @@
 <h1 align="center" style="margin-top: 0px;">Cleo</h1>
 
-<img src="https://img.shields.io/github/stars/Passive/Cleo?style=plastic"> <img src="https://img.shields.io/bitbucket/issues/Passive/Cleo?style=plastic"> 
+<img src="https://img.shields.io/github/stars/Passive/Cleo?style=plastic"> <img src="https://img.shields.io/github/forks/Passive/Cleo?style=plastic"> 
 
 A piece of C++ malware, grabs discord tokens and numerous other things.  
 
