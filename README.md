@@ -2,7 +2,8 @@
 
 <img src="https://img.shields.io/github/stars/Passive/Cleo?style=plastic"> <img src="https://img.shields.io/github/forks/Passive/Cleo?style=plastic"> 
 
-A piece of C++ malware, grabs discord tokens and numerous other things.  
+C++ malware, written specifically to target windows machines running Discord.
+Recently we started working on it again and have cleaned up the code.
 
 
 # Update notes
