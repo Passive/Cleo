@@ -1,26 +1,4 @@
-/* --------------------------------- ABOUT -------------------------------------
-Original Author: Adam Yaxley
-Website: https://github.com/adamyaxley
-License: See end of file
-Obfuscate
-Guaranteed compile-time string literal obfuscation library for C++14
-Usage:
-Pass string literals into the AY_OBFUSCATE macro to obfuscate them at compile
-time. AY_OBFUSCATE returns a reference to an ay::obfuscated_data object with the
-following traits:
-	- Guaranteed obfuscation of string
-	The passed string is encrypted with a simple XOR cipher at compile-time to
-	prevent it being viewable in the binary image
-	- Global lifetime
-	The actual instantiation of the ay::obfuscated_data takes place inside a
-	lambda as a function level static
-	- Implicitly convertable to a char*
-	This means that you can pass it directly into functions that would normally
-	take a char* or a const char*
-Example:
-const char* obfuscated_string = AY_OBFUSCATE("Hello World");
-std::cout << obfuscated_string << std::endl;
------------------------------------------------------------------------------ */
+#pragma once
 
 #ifndef AY_OBFUSCATE_DEFAULT_KEY
 // The default 64 bit key to obfuscate strings with.
