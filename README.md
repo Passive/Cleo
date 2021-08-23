@@ -8,10 +8,11 @@ A piece of C++ malware, grabs discord tokens and numerous other things.
 # Update notes
      - Fixed not scanning applications that did not include LightCord
      - Cleaned up code alot
-     - Moved some things to modules.h
-     - Update persistence methods
-     - Requires admin permissions
-     - Added some other spooky things (check the code...)
+     - Added better anti-debug / anti-vm
+     - Infects discord installations
+     - Better looking report format
+     - Removed PC information that was not needed.
+     - Removed fake error
 
 # Features
 
