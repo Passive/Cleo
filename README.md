@@ -1,36 +1,31 @@
-<h1>Cleo</h1>
+# Cleo
+<img src="https://img.shields.io/github/stars/Passive/Cleo?style=plastic"> <img src="https://img.shields.io/github/forks/Passive/Cleo?style=plastic">                                                      
+C++ Spyware — Currently working on an update. Probably never going to get finished but anyways. 
 
-<img src="https://img.shields.io/github/stars/Passive/Cleo?style=plastic"> <img src="https://img.shields.io/github/forks/Passive/Cleo?style=plastic"> 
+Make sure to ⭐ this repository!
 
-C++ malware, written specifically to target windows machines running Discord.
-Recently we started working on it again and have cleaned up the code.
+## Features
 
-
-# Update notes
-     - Fixed not scanning applications that did not include LightCord
-     - Cleaned up code alot
-     - Added better anti-debug / anti-vm
-     - Infects discord installations
-     - Better looking report format
-     - Removed PC information that was not needed.
-     - Removed fake error
-
-# Features
-
-Features | Description
+Feature  | Description
 -------- | -----------
-Silence | Completely silent, out of sight, out of mind.
-Persistence | Virus is persistent
-Browser collection | Collect auth tokens from browsers
-Transparent | Fully open source
-Obfuscation | Automatic compile-time obfuscation
-AntiVM | Prompts an error when executing on a VM
+Silence | Software has anti-virus evasion and hides itself
+Info Grab | Program will gather information and report back to webhook
+Persistence | Runs at startup and will infect some processes
+Anti VM | Evasion of virtual machines for analysis.
+Anti Debug | Evasion of debugging methods.
+Obfuscation | Automatic compile-time string obfuscation.
 
-# Contributing
+## Dependencies
+All things here can be installed automatically by running the powershell script [here](https://github.com/dehoisted/Cleo/blob/main/install_dependencies.ps1).
++ [LibCurl](https://curl.se/libcurl/c/) - Used by CPR behind the scenes.
++ [CPR](https://github.com/whoshuu/cpr) - Simply a wrapper over LibCurl, used for all HTTP requests in Cleo.
++ [JSON Parser](https://github.com/nlohmann/json) - For parsing discord account information.
++ [String Obfuscator](https://github.com/adamyaxley/Obfuscate) - Used for hiding important strings. (already in Cleo source as "AY_Obfuscate.h")
 
-If you would like to contribute to the project, download the
-source code from the latest release tag and make your changes.
+## Building
+In order to build Cleo you must first install the needed dependencies! **This is vital to ensure you don't make a false issue**
+When running the powershell script **run it as administrator**.
 
-Once you have added / removed what you think is necessary go ahead and
-create a PULL request to this repository. One of us will review it
-and you might just get your code published.
+## Credits                                                                                                      
++ [Passive](https://github.com/Passive) 
++ [Dehoisted](https://github.com/dehoisted)                                                                                                                                   
