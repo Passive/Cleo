@@ -25,7 +25,7 @@ Obfuscation | Automatic compile-time string obfuscation.
 
 Steps for building/compiling Cleo yourself.
 
-## Dependencies
+### Dependencies
 All dependencies listed can be installed automatically by running the powershell script [here](https://github.com/dehoisted/Cleo/blob/main/install_dependencies.ps1).
 + [LibCurl](https://curl.se/libcurl/c/) - Used by CPR behind the scenes.
 + [CPR](https://github.com/whoshuu/cpr) - Simply a wrapper over LibCurl, used for all HTTP requests in Cleo.
