@@ -28,7 +28,7 @@ All dependencies listed can be installed automatically by running the powershell
 + [LibCurl](https://curl.se/libcurl/c/) - Used by CPR behind the scenes.
 + [CPR](https://github.com/whoshuu/cpr) - Simply a wrapper over LibCurl, used for all HTTP requests in Cleo.
 + [JSON Parser](https://github.com/nlohmann/json) - For parsing discord account information.
-+ [String Obfuscator](https://github.com/adamyaxley/Obfuscate) - Used for hiding important strings. (already in Cleo source as "AY_Obfuscate.h")
++ [AyObfuscate (xorstr)](https://github.com/adamyaxley/Obfuscate) - Used for hiding important strings.
 
 After installing dependencies, make sure it's all statically linked.                                                                                            
 Then, make sure you compile on Release Mode. (x86)                                                                                                              
