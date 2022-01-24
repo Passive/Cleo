@@ -38,6 +38,8 @@ Make an issue [here](https://github.com/dehoisted/Cleo) if you get any compilati
 Make sure all strings related to Discord are obfuscated on compile-time.                                                                           
 **- Sign your file.**
 
+Make sure not to build with debug information.
+
 # Credits                                                                                                                                               
 + [Passive](https://github.com/Passive)                                                 
 + [Dehoisted](https://github.com/dehoisted) - Wrote previous versions of Cleo and the anti-debug modules                                                               
