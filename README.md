@@ -7,7 +7,7 @@ If you encounter an error or issue, make an issue [here](https://github.com/Pass
 Lastly, if code here is used for something else, **give credit where credit is due**.
 
 # Features
-Note: All info grabbed will be sent to the given webhook.
+_**Note: PERSISTENCE IS NOT INCLUDED WITHIN THE CURRENT BUILD**_
 
 Feature  | Description
 -------- | -----------
