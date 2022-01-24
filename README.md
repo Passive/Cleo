@@ -42,4 +42,4 @@ Make sure not to build with debug information.
 
 # Credits                                                                                                                                               
 + [Passive](https://github.com/Passive)                                                 
-+ [Dehoisted](https://github.com/dehoisted) - Wrote previous versions of Cleo and the anti-debug modules                                                               
++ [Dehoisted](https://github.com/dehoisted) - Wrote previous versions of Cleo and the anti-debug + Discord modules                                                               
