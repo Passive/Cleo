@@ -6,17 +6,17 @@
 bool GetSystemQueryInformation(SystemQueryInformation_t* SysQueryInformation)
 {
 	DWORD size = sizeof(SysQueryInformation->host);
-	GetComputerNameA(SysQueryInformation->host, &size);
+	::GetComputerNameA(SysQueryInformation->host, &size);
 
 	size = sizeof(SysQueryInformation->local_user);
-	GetUserNameA(SysQueryInformation->local_user, &size);
+	::GetUserNameA(SysQueryInformation->local_user, &size);
 
 	SysQueryInformation->inet_addr = cpr::Get(cpr::Url{ "https://api.ipify.org/?format=text" }).text;
 
 	return true;
 }
 
-char* SysComputerInformationCreateReport(SystemQueryInformation_t* query, BOOL formatted = TRUE)
+char* SysInformationCreateReport(SystemQueryInformation_t* query, BOOL formatted = TRUE)
 {
 	// TODO: extend this so that it is actually detailed...
 	char report[512];
