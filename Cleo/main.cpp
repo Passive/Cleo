@@ -91,13 +91,8 @@ int main(int argc, char* argv[]) {
 		MB_ICONWARNING | MB_OKCANCEL | MB_DEFBUTTON2
 	);
 
-	switch (MB_INPUT)
-	{
-	case IDCANCEL:
+	if (MB_INPUT == IDCANCEL)
 		return -1;
-	case IDOK:
-		break;
-	}
 	
 	while (!InternetCheckConnection(XorStr("http://www.google.com"), FLAG_ICC_FORCE_CONNECTION, 0))
 		Sleep(1000);
