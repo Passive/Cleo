@@ -4,7 +4,7 @@
 #define MAX_NAME 32
 
 // TODO: implement driver structs
-typedef struct {
+typedef struct SystemQueryInformation {
 	CHAR local_user[512];
 	CHAR host[124];
 	std::string inet_addr;
